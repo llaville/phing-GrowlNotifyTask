@@ -233,8 +233,8 @@ class GrowlNotifyTask extends Task
         // relative location
         if (strpos($icon, '..') === 0) {
             $icon = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . $icon);
-        }
-        elseif (strpos($icon, '.') === 0) {
+
+        } elseif (strpos($icon, '.') === 0) {
             $icon = dirname(__FILE__) . substr($icon, 1);
         }
 
@@ -244,8 +244,8 @@ class GrowlNotifyTask extends Task
     /**
      * The host address to send the notification to.
      *
-     * If any value other than 'localhost' or '127.0.0.1' is provided, the
-     * host is considered a remote host and the "pass" attribute must also be provided.
+     * If any value other than 'localhost' or '127.0.0.1' is provided, the host
+     * is considered a remote host and the "pass" attribute must also be provided.
      * Default: 127.0.0.1
      *
      * @param string $host Remote host name/ip
@@ -304,25 +304,25 @@ class GrowlNotifyTask extends Task
     public function setPriority($priority)
     {
         switch ($priority) {
-            case 'low' :
-                $priority = Net_Growl::PRIORITY_LOW;
-                break;
-            case 'moderate' :
-                $priority = Net_Growl::PRIORITY_MODERATE;
-                break;
-            case 'normal' :
-                $priority = Net_Growl::PRIORITY_NORMAL;
-                break;
-            case 'high' :
-                $priority = Net_Growl::PRIORITY_HIGH;
-                break;
-            case 'emergency' :
-                $priority = Net_Growl::PRIORITY_EMERGENCY;
-                break;
-            default :
-                throw new BuildException(
-                    '"priority" attribute is invalid.'
-                );
+        case 'low' :
+            $priority = Net_Growl::PRIORITY_LOW;
+            break;
+        case 'moderate' :
+            $priority = Net_Growl::PRIORITY_MODERATE;
+            break;
+        case 'normal' :
+            $priority = Net_Growl::PRIORITY_NORMAL;
+            break;
+        case 'high' :
+            $priority = Net_Growl::PRIORITY_HIGH;
+            break;
+        case 'emergency' :
+            $priority = Net_Growl::PRIORITY_EMERGENCY;
+            break;
+        default :
+            throw new BuildException(
+                '"priority" attribute is invalid.'
+            );
         }
 
         $this->priority = $priority;
@@ -343,17 +343,17 @@ class GrowlNotifyTask extends Task
     public function setProtocol($protocol)
     {
         switch ($protocol) {
-            case 'udp' :
-                $port = Net_Growl::UDP_PORT;
-                break;
-            case 'tcp' :
-                $port = Net_Growl::GNTP_PORT;
-                break;
-            default :
-                throw new BuildException(
-                    '"protocol" attribute is invalid.' .
-                    ' Expect to be either udp or tcp.'
-                );
+        case 'udp' :
+            $port = Net_Growl::UDP_PORT;
+            break;
+        case 'tcp' :
+            $port = Net_Growl::GNTP_PORT;
+            break;
+        default :
+            throw new BuildException(
+                '"protocol" attribute is invalid.' .
+                ' Expect to be either udp or tcp.'
+            );
         }
 
         $this->protocol = $protocol;
@@ -387,8 +387,8 @@ class GrowlNotifyTask extends Task
         // relative location
         if (strpos($icon, '..') === 0) {
             $icon = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . $icon);
-        }
-        elseif (strpos($icon, '.') === 0) {
+
+        } elseif (strpos($icon, '.') === 0) {
             $icon = dirname(__FILE__) . substr($icon, 1);
         }
 
