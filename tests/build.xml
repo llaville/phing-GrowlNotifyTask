@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="testGrowlNotifyTask" basedir="." default="testSingleNotification">
+<project name="testGrowlNotifyTask" basedir="." default="testEmptyMessage">
 
     <includepath classpath="../src/" />
     <taskdef name="growlnotify" classname="phing.tasks.ext.GrowlNotifyTask" />
+
+    <!-- A mock task will be added here -->
+    <target name="test" />
 
     <target name="testEmptyMessage"
         description="cannot display empty message"
@@ -28,7 +31,7 @@
         description="display a single message with an icon in a relative location"
     >
         <growlnotify message="Custom Application Icon."
-            appicon="..\..\..\..\data\Help.ico"
+            appicon="..\..\..\..\data\growlPhing.png"
         />
     </target>
 
@@ -69,9 +72,9 @@
         description="display a single message with icons in relative location"
     >
         <growlnotify message="Custom Application and Icon message."
-            appicon="..\..\..\..\data\Help.ico"
+            appicon="..\..\..\..\data\growlPhing.png"
             icon="..\..\..\..\data\warning.png"
         />
     </target>
-    
+
 </project>

@@ -56,13 +56,15 @@ require_once 'Net/Growl/Autoload.php';
  */
 class GrowlNotifyTask extends Task
 {
+    protected $growl;
+
     protected $name;
     protected $sticky;
     protected $message;
     protected $title;
     protected $notification;
     protected $appicon;
-    protected $setHost;
+    protected $host;
     protected $password;
     protected $priority;
     protected $protocol;
@@ -71,9 +73,13 @@ class GrowlNotifyTask extends Task
 
     /**
      * Initializes task with default options
+     *
+     * @param Net_Growl $growl (optional) mock instance 
      */
-    public function __construct()
+    public function __construct(Net_Growl $growl = null)
     {
+        $this->growl = $growl;
+
         $this->setTaskName('GrowlNotify');
         $this->setName();
         $this->setSticky(false);
@@ -422,9 +428,13 @@ class GrowlNotifyTask extends Task
         }
 
         try {
-            $growl = Net_Growl::singleton(
-                $this->name, $notifications, $this->password, $options
-            );
+            if ($this->growl instanceof Net_Growl) {
+                $growl = $this->growl;
+            } else {
+                $growl = Net_Growl::singleton(
+                    $this->name, $notifications, $this->password, $options
+                );
+            }
             $response = $growl->register();
 
             if ($response->getStatus() != 'OK') {
@@ -432,6 +442,25 @@ class GrowlNotifyTask extends Task
                     'Growl Error ' . $response->getErrorCode() .
                     ' - ' . $response->getErrorDescription()
                 );
+            }
+            $this->log(
+                'Application ' . $this->name . ' registered',
+                Project::MSG_VERBOSE
+            );
+
+            $logRequest = array(
+                'Application-Name'      => $this->name,
+                'Application-Icon'      => $this->appicon,
+                'Notification-Name'     => $this->notification,
+                'Notification-Title'    => $this->title,
+                'Notification-Text'     => $this->message,
+                'Notification-Priority' => $this->priority,
+                'Notification-Icon'     => $this->icon,
+                'Notification-Sticky'   => $this->sticky,
+            );
+            foreach ($logRequest as $key => $value) {
+                $this->log($key . ': ' . $value, Project::MSG_DEBUG);
+
             }
 
             $options = array(
@@ -449,6 +478,7 @@ class GrowlNotifyTask extends Task
                     ' - ' . $response->getErrorDescription()
                 );
             }
+            $this->log('Notification was sent to remote host ' . $this->host);
 
         } catch (Net_Growl_Exception $e) {
             throw new BuildException(
