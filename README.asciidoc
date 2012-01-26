@@ -59,7 +59,6 @@ Valid values are : low, moderate, normal, high, emergency
 == Examples
 
 .Send a single notification to a remote host
-[source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="phing-GrowlNotifyTask" basedir="." default="BroadcastNotification">
@@ -79,7 +78,6 @@ Valid values are : low, moderate, normal, high, emergency
 ----
 
 .Send a high notification on local host
-[source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="phing-GrowlNotifyTask" basedir="." default="BroadcastNotification">
