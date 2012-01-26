@@ -1,0 +1,102 @@
+= GrowlNotifyTask
+
+== Features
+
+* Be notified on long-task when they are finished
+* Don't forget notification with sticky option
+* Define priority of messages
+* Compatible Windows and Mac/OSX
+* Application is auto-registered
+* May customize application and message icons
+
+IMPORTANT: Does not support yet encryption and multi-notification types,
+as PEAR::Net_Growl package allow to do it since version 2.0.0
+
+CAUTION: Required to install at least 
+link:https://pear.php.net/package/Net_Growl[PEAR::Net_Growl] 2.1.0 or better
+
+
+== Attributes
+
+[grid="rows"]
+[options="header",cols="3,2,10,3,2"]
+|===========================
+|Name |Type |Description |Default |Required
+|name | String | Name of application to be register | Growl for Phing | No
+|sticky | Boolean | Indicates if the notification should be sticky | false | No
+|message| String | 
+Text of notification. 
+Use \n to specify a line break 
+| n/a | Yes
+|title | String | Title of notification | GrowlNotify | No
+|notification | String | The notification name/type | General Notification | No
+|icon | String |
+The icon of the application being registered.
+
+Must be a valid file type (png, jpg, gif, ico)
+
+Can be any of the following:
+
+* absolute url (http://domain/image.png)
+
+* absolute file path (c:\temp\image.png)
+
+* relative file path (.\folder\image.png)
+
+|n/a | No 
+|host | String | The host address to send the notification to | 127.0.0.1 | No
+|password | String | The password required to send notifications over lan | n/a | No
+
+|priority | String | 
+The notification priority.
+
+Valid values are : low, moderate, normal, high, emergency
+|normal | No
+|protocol | String | The protocol (and port) to send the notification to | tcp (gntp) | No
+|icon | String | The icon to show for the notification | growl icon v2 | No
+|===========================
+
+== Examples
+
+.Send a single notification to a remote host
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="phing-GrowlNotifyTask" basedir="." default="BroadcastNotification">
+
+    <taskdef name="growlnotify" classname="phing.tasks.ext.GrowlNotifyTask" />
+
+    <target name="BroadcastNotification"
+        description="display a single message over network"
+    >
+        <growlnotify message="Deployment of project LAMBDA is finished."
+            host="192.168.1.2"
+            password="mamasam"
+        />
+    </target>
+
+</project>
+----
+
+.Send a high notification on local host
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="phing-GrowlNotifyTask" basedir="." default="BroadcastNotification">
+
+    <taskdef name="growlnotify" classname="phing.tasks.ext.GrowlNotifyTask" />
+
+    <target name="BroadcastNotification"
+        description="display a single message over network"
+    >
+        <growlnotify message="Project LAMBDA build FAILED."
+            title="PhingNotify"
+            priority="high"
+            sticky="true"
+            appicon="c:/data/growlPhing.png"
+            icon="c:/data/warning.png"
+        />
+    </target>
+
+</project>
+----
