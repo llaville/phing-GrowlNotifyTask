@@ -12,9 +12,34 @@
 IMPORTANT: Does not support yet encryption and multi-notification types,
 as PEAR::Net_Growl package allow to do it since version 2.0.0
 
-CAUTION: Required to install at least 
+== Dependencies
+
+Requires to install at least 
 link:https://pear.php.net/package/Net_Growl[PEAR::Net_Growl] 2.1.0 or better
 
+== License
+
+GrowlNotifyTask is licensed under link:http://www.opensource.org/licenses/bsd-license.php[BSD]
+
+== Installation/Usage
+
+Download the script +phing/tasks/ext/GrowlNotifyTask.php+
+from link:https://github.com/llaville/phing-GrowlNotifyTask/blob/master/src/phing/tasks/ext/GrowlNotifyTask.php[]
+to where ever you want. 
+
+CAUTION: You have to fix the path related to classname below depending of where you put 
+the class script +GrowlNotifyTask.php+
+
+.In your project build file, you have to define the GrowlNotifyTask with a +taskdef+ tag
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="your-project" basedir=".">
+
+    <taskdef name="growlnotify" classname="phing.tasks.ext.GrowlNotifyTask" />
+
+    <!-- ... -->
+</project>
+----
 
 == Attributes
 
