@@ -40,7 +40,6 @@
  */
 
 require_once 'phing/Task.php';
-require_once 'Net/Growl/Autoload.php';
 
 /**
  * Growl notification task for Phing, the PHP build tool.
@@ -79,6 +78,27 @@ class GrowlNotifyTask extends Task
     public function __construct(Net_Growl $growl = null)
     {
         $this->growl = $growl;
+    }
+
+    /**
+     * The init method check if Net_Growl is available
+     * (exists and can be loaded)
+     *
+     * @return void
+     * @throws BuildException
+     */
+    public function init()
+    {
+        $autoloader = 'Net/Growl/Autoload.php';
+
+        if (!$handle = @fopen($autoloader, 'r', true)) {
+            throw new BuildException(
+                'The Growl Notify task requires the Net_Growl PEAR package.'
+            );
+        } else {
+            fclose($handle);
+            include_once $autoloader;
+        }
 
         $this->setTaskName('GrowlNotify');
         $this->setName();
