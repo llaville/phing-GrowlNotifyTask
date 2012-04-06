@@ -67,7 +67,6 @@ class GrowlNotifyTask extends Task
     protected $password;
     protected $priority;
     protected $protocol;
-    protected $port;
     protected $icon;
 
     /**
