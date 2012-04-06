@@ -14,8 +14,8 @@ as PEAR::Net_Growl package allow to do it since version 2.0.0
 
 == Dependencies
 
-Requires to install at least 
-link:https://pear.php.net/package/Net_Growl[PEAR::Net_Growl] 2.1.0 or better
+Requires to install the last version of branch 2.x
+link:https://pear.php.net/package/Net_Growl[PEAR::Net_Growl] 2.6.0
 
 == License
 

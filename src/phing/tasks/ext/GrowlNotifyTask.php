@@ -110,7 +110,7 @@ class GrowlNotifyTask extends Task
         $this->setHost('127.0.0.1');
         $this->setPassword('');
         $this->setPriority('normal');
-        $this->setProtocol('tcp');
+        $this->setProtocol('gntp');
         $this->setIcon('');
     }
 
@@ -370,20 +370,16 @@ class GrowlNotifyTask extends Task
     {
         switch ($protocol) {
         case 'udp' :
-            $port = Net_Growl::UDP_PORT;
-            break;
-        case 'tcp' :
-            $port = Net_Growl::GNTP_PORT;
+        case 'gntp' :
             break;
         default :
             throw new BuildException(
                 '"protocol" attribute is invalid.' .
-                ' Expect to be either udp or tcp.'
+                ' Expect to be either udp or gntp.'
             );
         }
 
         $this->protocol = $protocol;
-        $this->port     = $port;
     }
 
     /**
@@ -440,7 +436,6 @@ class GrowlNotifyTask extends Task
         );
         $options  = array(
             'host'     => $this->host,
-            'port'     => $this->port,
             'protocol' => $this->protocol,
         );
         if (!empty($this->appicon)) {
@@ -488,7 +483,7 @@ class GrowlNotifyTask extends Task
                 'priority' => $this->priority,
                 'icon'     => $this->icon,
             );
-            $response = $growl->notify(
+            $response = $growl->publish(
                 $this->notification, $this->title, $this->message, $options
             );
 
