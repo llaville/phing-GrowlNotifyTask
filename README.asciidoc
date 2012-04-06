@@ -77,7 +77,11 @@ The notification priority.
 
 Valid values are : low, moderate, normal, high, emergency
 |normal | No
-|protocol | String | The protocol (and port) to send the notification to | tcp (gntp) | No
+|protocol | String | 
+The protocol used to send the notification. 
+
+May be either gntp or udp. 
+| gntp | No
 |icon | String | The icon to show for the notification | growl icon v2 | No
 |===========================
 
