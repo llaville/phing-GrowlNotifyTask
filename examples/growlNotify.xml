@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="samplesGrowlNotifyTask" basedir="." default="testSingleConnector">
+
+    <typedef name="connector" classname="phing.tasks.ext.growl.Connector" />
+    <taskdef name="growlnotify" classname="phing.tasks.ext.growl.GrowlNotifyTask" />
+
+    <connector id="mainGntp" type="gntp" />
+
+    <connector id="altGntp" type="gntp">
+        <options>
+            <option name="icon" value="PEAR2\Net\Growl\Resource\Icon1" />
+        </options>
+    </connector>
+
+    <connector id="mainHttp" type="http">
+        <options>
+            <option name="service_uri" value="http://localhost/growler/" />
+            <option name="service_endpoint" value="notify" />
+            <option name="curl_options">
+                <option name="CURLOPT_POST" value="true" />
+                <option name="CURLOPT_USERAGENT" value="phingNetGrowl" />
+            </option>
+        </options>
+    </connector>
+
+    <connector id="mainSmtp" type="smtp">
+        <options>
+            <option name="host" value="smtp.example.com" />
+            <option name="to" value="user@example.com" />
+            <option name="subjectFormat" value="{application} - {title}" />
+            <option name="messageFormat" value='&lt;div&gt;&lt;h1&gt;&lt;img style="float:right" src="{cid}" /&gt;{title}&lt;/h1&gt;&lt;p&gt;{description}&lt;/p&gt;&lt;/div&gt;' />
+            <option name="content_type" value="text/html" />
+        </options>
+    </connector>
+
+    <connector id="altSmtp" type="smtp">
+        <options>
+            <option name="host" value="smtp.example.com" />
+            <option name="to" value="user@example.com" />
+            <option name="icon" value="file://C:\UwAmp\bin\php\php-5.3.10\includes\phing\tasks\ext\data\growl_phpunit.png" />
+            <option name="subjectFormat" value="[{application}] {title}" />
+            <option name="messageFormat" value='&lt;div&gt;&lt;h1&gt;&lt;img style="float:right" src="{cid}" /&gt;{title}&lt;/h1&gt;&lt;p&gt;{description}&lt;/p&gt;&lt;/div&gt;' />
+            <option name="content_type" value="text/html" />
+        </options>
+    </connector>
+
+    <connector id="textSmtp" type="smtp">
+        <options>
+            <option name="host" value="smtp.example.com" />
+            <option name="to" value="user@example.com" />
+            <option name="subjectFormat" value="[{application}] {title}" />
+            <option name="messageFormat" value="{description}" />
+            <option name="content_type" value="text/plain" />
+        </options>
+    </connector>
+    
+    
+    <target name="testSingleConnector"
+        description="display a single message with all default options"
+    >
+        <growlnotify message="Single sample message.">
+            <connector refid="mainGntp" />
+        </growlnotify>
+    </target>
+
+    <target name="testMultiConnectors"
+        description="send a single message with two connectors"
+    >
+        <growlnotify message="Get in touch with Growl GNTP and Mail SMTP."
+            title="Growl Notify Task Demo" 
+            >
+            <connector refid="altGntp" />
+            <connector refid="mainSmtp" />
+        </growlnotify>
+    </target>
+
+    <target name="testSingleStickyNotification"
+        description="display a single sticky message"
+    >
+        <growlnotify message="Sticky message."
+            sticky="true">
+            <connector refid="altGntp" />
+            <connector refid="altSmtp" />
+        </growlnotify>
+    </target>
+
+    <target name="testSingleCustomAppIconNotification"
+        description="display a single message with an icon in a relative location"
+    >
+        <growlnotify message="Custom Application Icon."
+            appicon="..\data\growlPhing.png">
+            <connector refid="mainGntp" />
+        </growlnotify>
+    </target>
+
+    <target name="testSingleConnectorType"
+        description="display a single message of custom notification type"
+    >
+        <growlnotify message="Build FINISHED"
+            notification="Status">
+            <connector refid="mainGntp" />
+        </growlnotify>
+    </target>
+
+    <target name="testSingleConnectorTitled"
+        description="display a single message with a title"
+    >
+        <growlnotify message="Build FAILED"
+            title="PhingNotify">
+            <connector refid="mainGntp" />
+        </growlnotify>
+    </target>
+
+    <target name="testBroadcastNotification"
+        description="display a single message over network"
+    >
+        <growlnotify message="Broadcast Message : build FAILED"
+            host="192.168.1.29"
+            sticky="true"
+            password="mamasam">
+            <connector refid="mainGntp" />
+        </growlnotify>
+    </target>
+
+    <target name="testSingleConnectorWithPriority"
+        description="display a single message with high priority"
+    >
+        <growlnotify message="Build FAILED"
+            priority="high">
+            <connector refid="mainGntp" />
+        </growlnotify>
+    </target>
+
+    <target name="testSingleCustomIconNotification"
+        description="display a single message with icons in relative location"
+    >
+        <growlnotify message="Custom Application and Icon message."
+            appicon="..\data\growlPhing.png"
+            icon="..\data\warning.png">
+            <connector refid="mainGntp" />
+        </growlnotify>
+    </target>
+
+</project>
