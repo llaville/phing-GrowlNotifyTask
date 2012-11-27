@@ -1,7 +1,7 @@
 = GrowlNotifyTask
 
 *Status* this task is now included in the Phing distribution since 
-link:http://www.phing.info/trac/wiki/Users/News/Phing%202.4.13%20released[release 2.4.13] (ticket #945)
+link:http://www.phing.info/trac/wiki/Users/News/Phing%202.4.13%20released[release 2.4.13] (ticket #845)
 
 == Features
 
